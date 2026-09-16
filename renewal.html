@@ -887,8 +887,7 @@ ${d.巻き直し決裁取得済み
               <div class="send-label">企業送付</div>
               <div class="send-fields">
                 <div class="send-sub">送付者</div>
-                <select id="csender-${d._uid}" ${dis}>${senderOpts(d._corp_sender)}</select>
-                <select onchange="setTodayIfEmpty('cdate-${d._uid}', this.value)"</select>
+                <select id="csender-${d._uid}" ${dis}>${senderOpts(d._corp_sender)} onchange="setTodayIfEmpty('cdate-${d._uid}', this.value)"</select>
                 <div class="send-sub">対応日</div>
                 <input type="date" id="cdate-${d._uid}" value="${d._corp_date}" ${dis}>
               </div>
@@ -897,8 +896,7 @@ ${d.巻き直し決裁取得済み
               <div class="send-label">スタッフ送付</div>
               <div class="send-fields">
                 <div class="send-sub">送付者</div>
-                <select id="ssender-${d._uid}" ${dis}>${senderOpts(d._staff_sender)}</select>
-                 <select onchange="setTodayIfEmpty('sdate-${d._uid}', this.value)"</select>
+                <select id="ssender-${d._uid}" ${dis}>${senderOpts(d._staff_sender)} onchange="setTodayIfEmpty('sdate-${d._uid}', this.value)"</select>
                 <div class="send-sub">対応日</div>
                 <input type="date" id="sdate-${d._uid}" value="${d._staff_date}" ${dis}>
               </div>
