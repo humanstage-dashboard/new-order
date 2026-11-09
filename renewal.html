@@ -341,14 +341,35 @@ if (!res.ok) {
 }
 
 const data = await res.json();
-    
+
+let allItems = [...data.value];
+
+let nextLink = data['@odata.nextLink'];
+
+while(nextLink){
+
+  const nextRes = await fetch(
+    nextLink,
+    {
+      headers:{
+        Authorization:`Bearer ${accessToken}`
+      }
+    }
+  );
+
+  const nextData = await nextRes.json();
+
+  allItems.push(...nextData.value);
+
+  nextLink = nextData['@odata.nextLink'];
+}
+
 console.log(
   "全件",
-  JSON.stringify(data.value, null, 2)
+  JSON.stringify(allItems, null, 2)
 );
 
-let raw = data.value.map(item => ({
-
+let raw = allItems.map(item => ({
   Id: item.id,
 
   支店:
