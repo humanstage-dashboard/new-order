@@ -1010,13 +1010,12 @@ if (
   try {
   await saveData(item);
 
-  const msg = document.getElementById('saved-'+uid);
-  if (msg) {
-    msg.style.display = 'inline';
-  }
+const msg = document.getElementById('saved-'+uid);
+if (msg) {
+  msg.style.display = 'inline';
+}
 
-  // SharePointから再取得
-  await loadData();
+// await loadData();
 
 } catch(e) {
   showError('保存に失敗しました: ' + e.message);
