@@ -492,15 +492,27 @@ _corp_sender:
 item.fields["_x4f01__x696d__x9001__x4ed8__x80"] || '（未設定）',
 
 _corp_date:
-(item.fields["_x4f01__x696d__x9001__x4ed8__x65"] || '')
-  .substring(0,10),
+item.fields["_x4f01__x696d__x9001__x4ed8__x65"]
+  ? new Date(
+      item.fields["_x4f01__x696d__x9001__x4ed8__x65"]
+    ).toLocaleDateString(
+      'sv-SE',
+      { timeZone: 'Asia/Tokyo' }
+    )
+  : '',
 
 _staff_sender:
 item.fields["_x30b9__x30bf__x30c3__x30d5__x90"] || '（未設定）',
 
 _staff_date:
-(item.fields["_x30b9__x30bf__x30c3__x30d5__x900"] || '')
-  .substring(0,10)
+item.fields["_x30b9__x30bf__x30c3__x30d5__x900"]
+  ? new Date(
+      item.fields["_x30b9__x30bf__x30c3__x30d5__x900"]
+    ).toLocaleDateString(
+      'sv-SE',
+      { timeZone: 'Asia/Tokyo' }
+    )
+  : '',
 }));
 
     console.log('取得件数（展開前）:', raw.length);
