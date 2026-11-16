@@ -305,6 +305,20 @@ async function loadData() {
   document.getElementById('sync-status').textContent = '読み込み中…';
   document.getElementById('sync-btn').disabled = true;
   document.getElementById('cards').innerHTML   = '<div class="loading">データを読み込んでいます…</div>';
+
+    // 現在の絞り込み条件を保持
+  const currentFilters = {
+    search: document.getElementById('search')?.value || '',
+    branch: document.getElementById('filterBranch')?.value || '',
+    tanto: document.getElementById('filterTanto')?.value || '',
+    kind: document.getElementById('filterKind')?.value || '',
+    status: document.getElementById('filterStatus')?.value || '',
+    deadline: document.getElementById('filterDeadline')?.value || '',
+    dateFrom: document.getElementById('filterDateFrom')?.value || '',
+    dateTo: document.getElementById('filterDateTo')?.value || '',
+    sort: document.getElementById('sortOrder')?.value || 'new'
+  };
+
   try {
     // トークンを毎回再取得（キャッシュされたトークンを避ける）
     const accounts = msalInstance.getAllAccounts();
@@ -504,6 +518,18 @@ _staff_date:
     state = expandRows(raw);
     console.log('展開後件数:', state.length);
     rebuildFilters();
+
+    // 絞り込み条件を復元
+document.getElementById('search').value = currentFilters.search;
+document.getElementById('filterBranch').value = currentFilters.branch;
+document.getElementById('filterTanto').value = currentFilters.tanto;
+document.getElementById('filterKind').value = currentFilters.kind;
+document.getElementById('filterStatus').value = currentFilters.status;
+document.getElementById('filterDeadline').value = currentFilters.deadline;
+document.getElementById('filterDateFrom').value = currentFilters.dateFrom;
+document.getElementById('filterDateTo').value = currentFilters.dateTo;
+document.getElementById('sortOrder').value = currentFilters.sort;
+    
     renderAll();
     const now = new Date().toLocaleTimeString('ja-JP');
     document.getElementById('sync-status').textContent = `最終更新：${now}　（${state.length}件）`;
