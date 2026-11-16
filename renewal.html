@@ -958,6 +958,16 @@ async function saveCard(uid) {
   const item = state.find(d => d._uid === uid); if (!item) return;
   item._status       = document.getElementById('status-'+uid).value;
   item._maker        = document.getElementById('maker-'+uid).value;
+
+// 作成者が入力されたら依頼受付→支店チェック待ちへ自動変更
+if (
+  item._status === '依頼受付' &&
+  item._maker &&
+  item._maker !== '（未設定）'
+) {
+  item._status = '支店チェック待ち';
+}
+  
   item._note         = document.getElementById('note-'+uid).value;
   item._corp_sender  = document.getElementById('csender-'+uid).value;
   item._corp_date    = document.getElementById('cdate-'+uid).value;
