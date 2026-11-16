@@ -986,6 +986,14 @@ if (
   item._staff_sender = document.getElementById('ssender-'+uid).value;
   item._staff_date   = document.getElementById('sdate-'+uid).value;
 
+// 企業送付・スタッフ送付の両方が入力されたら作成完了
+if (
+  item._corp_sender !== '（未設定）' &&
+  item._staff_sender !== '（未設定）'
+) {
+  item._status = '作成完了';
+}
+  
   // ステータスバッジを更新
   const badge = document.getElementById('sbadge-'+uid);
   if (badge) { badge.className = 'badge '+statusBadgeClass(item._status); badge.textContent = item._status; }
