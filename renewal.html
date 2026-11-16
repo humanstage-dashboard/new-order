@@ -390,16 +390,6 @@ let raw = allItems.map(item => ({
   契約種別:
   item.fields["_x5951__x7d04__x7a2e__x5225_"],
 
-console.log(
-  '開始日元',
-  item.fields["_x5951__x7d04__x958b__x59cb__x65"]
-);
-
-console.log(
-  '終了日元',
-  item.fields["_x5951__x7d04__x7d42__x4e86__x65"]
-);
-  
   契約開始日:
 (item.fields["_x5951__x7d04__x958b__x59cb__x65"] || '')
   .substring(0,10),
