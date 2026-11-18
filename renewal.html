@@ -764,11 +764,24 @@ function getFiltered() {
     if (kind   && !d.契約種別?.includes(kind)) return false;
     if (status && d._status   !== status) return false;
     if (dl) {
-      const s = deadlineStatus(d.契約開始日);
-      if (dl === 'urgent' && s !== 'urgent')  return false;
-      if (dl === 'soon3'  && s !== 'soon3')   return false;
-      if (dl === 'soon7'  && s !== 'soon7')   return false;
-    }
+
+  // 「全ての開始日」以外は作成完了・依頼キャンセルを除外
+  if (
+    dl !== 'all' &&
+    (
+      d._status === '作成完了' ||
+      d._status === '依頼キャンセル'
+    )
+  ) {
+    return false;
+  }
+
+  const s = deadlineStatus(d.契約開始日);
+
+  if (dl === 'urgent' && s !== 'urgent') return false;
+  if (dl === 'soon3'  && s !== 'soon3')  return false;
+  if (dl === 'soon7'  && s !== 'soon7')  return false;
+}
     // 期間指定フィルター
     // dateFrom指定あり：契約開始日がdateFrom以降
     if (dateFrom && d.契約開始日 && d.契約開始日 < dateFrom) return false;
