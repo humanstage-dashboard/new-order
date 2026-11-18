@@ -478,6 +478,9 @@ item.lastModifiedBy?.user?.displayName || '',
     }
   );
 })(),
+
+  受付日時Raw:
+item.fields["_x53d7__x4ed8__x65e5__x6642_"] || '',
   
   _status:
   item.fields["_x4f5c__x6210__x72b6__x6cc1_"],
@@ -780,7 +783,7 @@ function getFiltered() {
   filtered.sort((a, b) => {
     switch (sort) {
       case 'new':
-　　　　 return new Date(b.受付日時) - new Date(a.受付日時);
+  return new Date(b.受付日時Raw) - new Date(a.受付日時Raw);
       case 'old':
         return (parseFloat(a.Id) || 0) - (parseFloat(b.Id) || 0);
       case 'deadline_asc': {
