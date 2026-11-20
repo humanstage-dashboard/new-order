@@ -31,7 +31,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino San
 .mode-view { background: #F1F5F9; color: #64748B; border: 0.5px solid #E2E8F0; }
 .auth-err { font-size: 12px; color: #DC2626; }
 .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
-.metric { background: white; border-radius: 8px; padding: 10px 12px; border: 0.5px solid #E2E8F0; }
+.metric { background: white; border-radius: 8px; padding: 10px 12px; border: 0.5px solid #E2E8F0; cursor:pointer; transition:all .2s ease; }
+.metric:hover{ background:#F8FAFC; transform:translateY(-2px); }
 .metric-label { font-size: 12px; color: #64748B; margin-bottom: 4px; }
 .metric-val { font-size: 22px; font-weight: 500; color: #1E293B; }
 .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1rem; padding: 8px 12px; background: white; border-radius: 8px; border: 0.5px solid #E2E8F0; }
@@ -855,12 +856,41 @@ function renderMetrics(data) {
     return notDone && s === 'soon3';
   }).length;
   document.getElementById('metrics').innerHTML = `
-    <div class="metric"><div class="metric-label">依頼受付</div><div class="metric-val" style="color:#1E2761">${pending}</div></div>
-    <div class="metric"><div class="metric-label">支店対応中</div><div class="metric-val" style="color:#7C3AED">${check}</div></div>
-    <div class="metric"><div class="metric-label">開始まで7日以内</div><div class="metric-val" style="color:#EA580C">${soon3}</div></div>
-    <div class="metric"><div class="metric-label">開始まで3日以内・超過</div><div class="metric-val" style="color:#DC2626">${critical}</div></div>`;
+    <div class="metric" onclick="filterMetric('pending')"><div class="metric-label">依頼受付</div><div class="metric-val" style="color:#1E2761">${pending}</div></div>
+    <div class="metric" onclick="filterMetric('check')"><div class="metric-label">支店対応中</div><div class="metric-val" style="color:#7C3AED">${check}</div></div>
+    <div class="metric" onclick="filterMetric('soon3')"><div class="metric-label">開始まで7日以内</div><div class="metric-val" style="color:#EA580C">${soon3}</div></div>
+    <div class="metric" onclick="filterMetric('urgent')"><div class="metric-label">開始まで3日以内・超過</div><div class="metric-val" style="color:#DC2626">${critical}</div></div>`;
 }
 
+function filterMetric(type){
+
+  // 一旦リセット
+  document.getElementById('filterStatus').value = '';
+  document.getElementById('filterDeadline').value = '';
+
+  if(type === 'pending'){
+    document.getElementById('filterStatus').value =
+      '依頼受付';
+  }
+
+  if(type === 'check'){
+    document.getElementById('filterStatus').value =
+      '支店対応依頼中';
+  }
+
+  if(type === 'soon3'){
+    document.getElementById('filterDeadline').value =
+      'soon3';
+  }
+
+  if(type === 'urgent'){
+    document.getElementById('filterDeadline').value =
+      'urgent';
+  }
+
+  renderAll();
+}
+  
 function senderOpts(sel) { return SENDERS.map(s  => `<option${s===sel?' selected':''}>${s}</option>`).join(''); }
 function makerOpts(sel)  { return MAKERS.map(s   => `<option${s===sel?' selected':''}>${s}</option>`).join(''); }
 function statusOpts(sel) { return STATUSES.map(s => `<option${s===sel?' selected':''}>${s}</option>`).join(''); }
