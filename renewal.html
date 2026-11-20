@@ -755,13 +755,25 @@ function getFiltered() {
   const dl         = document.getElementById('filterDeadline').value;
   const dateFrom = document.getElementById('filterDateFrom')?.value || '';
   const dateTo   = document.getElementById('filterDateTo')?.value || '';
-  const sort       = document.getElementById('sortOrder')?.value || 'new';
-
+  const sort = document.getElementById('sortOrder')?.value || 'old';
+  
   let filtered = state.filter(d => {
     if (q && !d.企業?.toLowerCase().includes(q) && !d._staffName.toLowerCase().includes(q)) return false;
     if (branch && d.支店      !== branch) return false;
     if (tanto  && d.営業担当  !== tanto)  return false;
     if (kind   && !d.契約種別?.includes(kind)) return false;
+
+// ステータス未選択時は作成完了・依頼キャンセルを非表示
+if (
+  !status &&
+  (
+    d._status === '作成完了' ||
+    d._status === '依頼キャンセル'
+  )
+) {
+  return false;
+}
+    
     if (status && d._status   !== status) return false;
     if (dl) {
 
